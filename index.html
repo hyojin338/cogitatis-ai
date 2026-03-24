@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cogitatis AI — A Learning Platform for the AI Era</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap');
+</style>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cardinal: #9B1B30;
+    --cardinal-dark: #6B0F1F;
+    --cardinal-deep: #3D0A12;
+    --gold: #FFCC00;
+    --gold-soft: #F5B800;
+    --cream: #FAF7F0;
+    --ink: #1A0A0D;
+    --ink-soft: #3D2029;
+    --muted: #8A7070;
+    --border: rgba(155,27,48,0.15);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 3rem;
+    background: rgba(250,247,240,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--cardinal);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+  }
+
+  .nav-logo span {
+    color: var(--gold-soft);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--cardinal); }
+
+  .nav-cta {
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--cream);
+    background: var(--cardinal);
+    padding: 0.6rem 1.4rem;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .nav-cta:hover { background: var(--cardinal-dark); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 8rem 3rem 5rem;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--cardinal-deep) 0%, var(--cardinal) 50%, #C4313A 100%);
+  }
+
+  .hero-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    background-image: repeating-linear-gradient(
+      45deg,
+      var(--gold) 0px,
+      var(--gold) 1px,
+      transparent 1px,
+      transparent 40px
+    );
+  }
+
+  .hero-glow {
+    position: absolute;
+    bottom: -100px;
+    right: -100px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255,204,0,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 500;
+    line-height: 1.0;
+    color: #fff;
+    margin-bottom: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.35s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-latin {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-style: italic;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 2rem;
+    letter-spacing: 0.05em;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.5s forwards;
+  }
+
+  .hero-sub {
+    font-size: 1.25rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.85);
+    max-width: 580px;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.65s forwards;
+  }
+
+  .hero-sub strong {
+    color: #fff;
+    font-weight: 500;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+
+  .btn-primary {
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cardinal-deep);
+    background: var(--gold);
+    padding: 0.9rem 2rem;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .btn-primary:hover {
+    background: #fff;
+    transform: translateY(-1px);
+  }
+
+  .btn-ghost {
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .btn-ghost:hover {
+    color: #fff;
+    border-color: rgba(255,255,255,0.7);
+  }
+
+  .hero-badge {
+    position: absolute;
+    bottom: 3rem;
+    right: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 1s forwards;
+  }
+
+  .hero-badge-text {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .hero-badge-name {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.7);
+  }
+
+  /* SECTIONS */
+  section { padding: 6rem 3rem; }
+
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cardinal);
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+
+  .section-body {
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--ink-soft);
+    max-width: 640px;
+  }
+
+  /* PROBLEM */
+  .problem {
+    background: var(--ink);
+    color: var(--cream);
+  }
+
+  .problem .section-label { color: var(--gold); }
+  .problem .section-title { color: #fff; }
+  .problem .section-body { color: rgba(255,255,255,0.65); }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .risk-list {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .risk-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.9rem 1.2rem;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 2px;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 0.02em;
+  }
+
+  .risk-item::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--cardinal);
+    flex-shrink: 0;
+  }
+
+  .opportunity-list {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .opp-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.9rem 1.2rem;
+    border: 1px solid rgba(255,204,0,0.2);
+    border-radius: 2px;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.75);
+  }
+
+  .opp-item::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  .problem-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.08);
+    align-self: stretch;
+    display: none;
+  }
+
+  /* PRINCIPLES */
+  .principles { background: var(--cream); }
+
+  .principles-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .principles-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 4rem;
+    align-items: end;
+  }
+
+  .principles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .principle-card {
+    background: #fff;
+    padding: 2.5rem 2rem;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .principle-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(155,27,48,0.08);
+  }
+
+  .principle-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--cardinal);
+  }
+
+  .principle-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    font-weight: 400;
+    color: rgba(155,27,48,0.08);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .principle-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--cardinal);
+    margin-bottom: 0.75rem;
+  }
+
+  .principle-body {
+    font-size: 0.9rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--ink-soft);
+  }
+
+  /* MODULES */
+  .modules { background: #fff; }
+
+  .modules-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .modules-header {
+    margin-bottom: 3rem;
+  }
+
+  .modules-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem;
+  }
+
+  .module-card {
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 2rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    cursor: default;
+  }
+
+  .module-card:hover {
+    border-color: var(--cardinal);
+    background: var(--cream);
+    transform: translateY(-3px);
+  }
+
+  .module-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--cardinal);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+  }
+
+  .module-icon svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: var(--gold);
+    stroke-width: 1.5;
+  }
+
+  .module-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--cardinal);
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+
+  .module-body {
+    font-size: 0.82rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+
+  /* TEAM */
+  .team { background: var(--cream); }
+
+  .team-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .team-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .team-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--cardinal), var(--gold));
+  }
+
+  .team-role {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cardinal);
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
+
+  .team-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 1.25rem;
+    line-height: 1.2;
+  }
+
+  .team-bio {
+    font-size: 0.88rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--ink-soft);
+  }
+
+  /* CONTACT */
+  .contact {
+    background: var(--cardinal-deep);
+    text-align: center;
+    padding: 8rem 3rem;
+  }
+
+  .contact .section-label { color: var(--gold); margin-bottom: 1.5rem; }
+
+  .contact-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    line-height: 1.15;
+  }
+
+  .contact-body {
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 3rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+  }
+
+  .contact-email {
+    display: inline-block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-style: italic;
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,204,0,0.3);
+    padding-bottom: 4px;
+    transition: border-color 0.2s;
+  }
+
+  .contact-email:hover { border-color: var(--gold); }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    padding: 2rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .footer-logo span { color: var(--gold); }
+
+  .footer-copy {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.04em;
+  }
+
+  .footer-usc {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.04em;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 6rem 1.5rem 4rem; }
+    .problem-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .principles-header { grid-template-columns: 1fr; gap: 1.5rem; }
+    .principles-grid { grid-template-columns: 1fr; gap: 2px; }
+    .modules-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .team-grid { grid-template-columns: 1fr; }
+    .hero-badge { display: none; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+
+  @media (max-width: 600px) {
+    .modules-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">Cogitatis<span>.AI</span></a>
+  <ul class="nav-links">
+    <li><a href="#problem">The Challenge</a></li>
+    <li><a href="#principles">Principles</a></li>
+    <li><a href="#modules">Platform</a></li>
+    <li><a href="#team">Team</a></li>
+  </ul>
+  <a class="nav-cta" href="#contact">Get in Touch</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">A Learning Platform for the AI Era</p>
+    <h1 class="hero-title">Cogitatis<em>.AI</em></h1>
+    <p class="hero-latin">coh-jih-TAH-tis &nbsp;·&nbsp; Latin: "you all think"</p>
+    <p class="hero-sub">
+      Not AI thinking for you — <strong>you</strong> thinking.<br>
+      A learning platform designed to ensure that in the age of generative AI, students remain the ones doing the thinking.
+    </p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#modules">Explore the Platform</a>
+      <a class="btn-ghost" href="#contact">Contact Us →</a>
+    </div>
+  </div>
+  <div class="hero-badge">
+    <span class="hero-badge-text">Built at</span>
+    <span class="hero-badge-name">University of Southern California</span>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem" id="problem">
+  <div class="problem-grid">
+    <div class="reveal">
+      <p class="section-label">The Challenge</p>
+      <h2 class="section-title">AI in higher education presents real risks — and extraordinary possibilities.</h2>
+      <p class="section-body">The real challenge is not whether AI should be used. It is how institutions can integrate AI in ways that strengthen learning rather than replace it.</p>
+    </div>
+    <div class="reveal" style="transition-delay:0.15s">
+      <div style="margin-bottom:2rem">
+        <p style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:0.75rem">Risks</p>
+        <div class="risk-list">
+          <div class="risk-item">Plagiarism & academic dishonesty</div>
+          <div class="risk-item">Hallucination & misinformation</div>
+          <div class="risk-item">Homogenized thinking</div>
+          <div class="risk-item">Epistemic risk</div>
+          <div class="risk-item">Devaluation of degrees</div>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,204,0,0.5);margin-bottom:0.75rem">Opportunities</p>
+        <div class="opportunity-list">
+          <div class="opp-item">Personalized tutoring at scale</div>
+          <div class="opp-item">Instant feedback & scaffolding</div>
+          <div class="opp-item">Cognitive scaffolding</div>
+          <div class="opp-item">Accessible learning support</div>
+          <div class="opp-item">Critical AI literacy</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRINCIPLES -->
+<section class="principles" id="principles">
+  <div class="principles-inner">
+    <div class="principles-header">
+      <div class="reveal">
+        <p class="section-label">Our Principles</p>
+        <h2 class="section-title">Three ideas that shift AI from replacing effort to supporting understanding.</h2>
+      </div>
+      <div class="reveal" style="transition-delay:0.1s">
+        <p class="section-body">Cogitatis AI is not a neutral tool. It is built on a philosophy — that educators lead, students think, and AI supports the process without shortcutting it.</p>
+      </div>
+    </div>
+    <div class="principles-grid">
+      <div class="principle-card reveal">
+        <div class="principle-number">01</div>
+        <h3 class="principle-title">Educator-Guided Interaction</h3>
+        <p class="principle-body">Faculty understand what students are meant to learn. In our platform, educators define how AI is used, what questions it should guide, and what boundaries it should have — for each course and each assignment.</p>
+      </div>
+      <div class="principle-card reveal" style="transition-delay:0.1s">
+        <div class="principle-number">02</div>
+        <h3 class="principle-title">Demonstrated Learning</h3>
+        <p class="principle-body">When polished outputs can be generated instantly, assessment structures must evolve. We create mechanisms that verify understanding through engagement — not just final submissions.</p>
+      </div>
+      <div class="principle-card reveal" style="transition-delay:0.2s">
+        <div class="principle-number">03</div>
+        <h3 class="principle-title">Multi-Model Judgment</h3>
+        <p class="principle-body">Students must learn not just to use AI, but to evaluate it. By comparing multiple models and perspectives, students develop critical judgment about AI reasoning itself.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULES -->
+<section class="modules" id="modules">
+  <div class="modules-inner">
+    <div class="modules-header reveal">
+      <p class="section-label">Inside Cogitatis AI</p>
+      <h2 class="section-title">Five modules. One integrated learning environment.</h2>
+    </div>
+    <div class="modules-grid">
+      <div class="module-card reveal">
+        <div class="module-icon">
+          <svg viewBox="0 0 24 24"><circle cx="8" cy="12" r="3"/><circle cx="16" cy="12" r="3"/><path d="M11 12h2"/></svg>
+        </div>
+        <h3 class="module-title">Multi-Model Playground</h3>
+        <p class="module-body">Compare GPT, Gemini, and Claude side by side. AI flags hallucination risk and synthesizes a final answer across models — reducing single-model dependence.</p>
+      </div>
+      <div class="module-card reveal" style="transition-delay:0.08s">
+        <div class="module-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M12 11v6M9 17h6"/></svg>
+        </div>
+        <h3 class="module-title">Avatar Lecture Studio</h3>
+        <p class="module-body">Transform any topic into an avatar-delivered lecture with optional slides — embedded in an interactive environment where students can ask questions in real time.</p>
+      </div>
+      <div class="module-card reveal" style="transition-delay:0.16s">
+        <div class="module-icon">
+          <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        </div>
+        <h3 class="module-title">Personalized Quiz Generator</h3>
+        <p class="module-body">Generate individualized quiz questions from each student's own writing — verifying authentic understanding and shifting the incentive from submitting work to knowing it.</p>
+      </div>
+      <div class="module-card reveal" style="transition-delay:0.24s">
+        <div class="module-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <h3 class="module-title">Socratic Writing Studio</h3>
+        <p class="module-body">A scaffolded essay development environment — not a writing assistant. Students move through Clarify, Research, Build, and Write. They submit a ledger, not just a final essay.</p>
+      </div>
+      <div class="module-card reveal" style="transition-delay:0.32s">
+        <div class="module-icon">
+          <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        </div>
+        <h3 class="module-title">AI Policy Builder</h3>
+        <p class="module-body">Educators define course-level AI policy — what is permitted, for which assignments, to what degree. That policy is embedded directly into student interactions. Governance, not aspiration.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team" id="team">
+  <div class="team-inner">
+    <div class="reveal">
+      <p class="section-label">Who We Are</p>
+      <h2 class="section-title">Built at the intersection of philosophy, economics, and AI.</h2>
+    </div>
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <p class="team-role">Co-Founder · Philosophy</p>
+        <h3 class="team-name">John Patrick Hawthorne</h3>
+        <p class="team-bio">USC Provost Professor of Philosophy and Linda MacDonald Hill Chair. Co-Director of the USC Institute on Ethics and Trust in Computing. One of the world's leading epistemologists, bringing the philosophical foundation that shapes how Cogitatis AI thinks about knowledge, belief, and what it means for AI to get something wrong.</p>
+      </div>
+      <div class="team-card reveal" style="transition-delay:0.1s">
+        <p class="team-role">Co-Founder · Analytics & AI</p>
+        <h3 class="team-name">Hyojin Helena Song</h3>
+        <p class="team-bio">PhD in Economics from USC. A decade at Microsoft as Director of Analytics, Compliance & Ethics — building AI-driven detection systems at scale. Now Visiting Scholar at USC Philosophy and IETC, translating rigorous quantitative methods into practical AI governance and education technology.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <p class="section-label">Get in Touch</p>
+  <h2 class="contact-title">Interested in Cogitatis AI?<br>We would love to hear from you.</h2>
+  <p class="contact-body">Whether you are an educator, researcher, or institution exploring responsible AI integration — reach out and let's talk.</p>
+  <a class="contact-email" id="contact-link" href="#">hello&#64;cogitatis&#46;ai</a>
+  <script>document.getElementById('contact-link').href='mai'+'lto:'+'hello'+'@'+'cogitatis.ai';</script>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">Cogitatis<span>.AI</span></span>
+  <span class="footer-copy">© 2026 Cogitatis AI</span>
+  <span class="footer-usc">USC Institute on Ethics & Trust in Computing</span>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.05, rootMargin: '0px 0px -50px 0px' });
+  reveals.forEach(el => observer.observe(el));
+  setTimeout(() => { reveals.forEach(el => el.classList.add('visible')); }, 800);
+</script>
